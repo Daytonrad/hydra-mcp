@@ -1,0 +1,52 @@
+name: Bug report
+description: Something does not work as documented.
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. **Security issue?** Do not file it here: use [private reporting](https://github.com/lambi702/hydra-mcp/security/advisories/new).
+        Before posting logs, remove tokens, keys (`hmcp_…`), email addresses and site names you want to keep private.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, what you got instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Connections, add Linear
+        2. …
+    validations:
+      required: true
+  - type: input
+    id: connector
+    attributes:
+      label: Connector(s) involved
+      placeholder: Atlassian, Gmail, a custom server…
+  - type: dropdown
+    id: client
+    attributes:
+      label: AI app
+      options: [Claude Code, Cursor, VS Code, Other, Not relevant]
+  - type: input
+    id: version
+    attributes:
+      label: hydra-mcp version or commit
+      description: Printed by `hydra-mcp serve` on start, or `git rev-parse --short HEAD`.
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: OS, Python and Node versions
+      placeholder: macOS 26.1, Python 3.13, Node 22
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log lines (redacted)
+      render: text

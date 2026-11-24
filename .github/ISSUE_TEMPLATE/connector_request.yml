@@ -1,0 +1,45 @@
+name: Connector request or fix
+description: Add a service to the connector library, or fix an out-of-date guide.
+labels: ["connector", "triage"]
+body:
+  - type: input
+    id: service
+    attributes:
+      label: Service
+      placeholder: Jira Data Center, HubSpot, Slack…
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: MCP server URL
+      description: The vendor's official remote MCP endpoint (Streamable HTTP).
+      placeholder: https://mcp.example.com/mcp
+    validations:
+      required: true
+  - type: input
+    id: docs
+    attributes:
+      label: Official documentation
+      placeholder: https://docs.example.com/mcp
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Request
+      options: [Add a new connector, Fix or update an existing guide]
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: What you know about sign-in
+      description: Does it allow dynamic client registration? Accept personal tokens? Need an admin approval or a plan? Anything that tripped you up.
+  - type: checkboxes
+    id: help
+    attributes:
+      label: Contributing
+      options:
+        - label: I can test it with a real account.
+        - label: I would like to open the pull request (see CONTRIBUTING.md, "Adding or updating a connector").

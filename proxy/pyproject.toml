@@ -1,0 +1,44 @@
+[project]
+name = "hydra-mcp"
+version = "0.1.0"
+description = "Multi-account proxy in front of MCP servers. Login and consent stay with each upstream."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "starlette>=0.41",
+    "uvicorn[standard]>=0.32",
+    "httpx>=0.28",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.6",
+    "aiosqlite>=0.20",
+    "cryptography>=43",
+]
+
+[project.scripts]
+hydra-mcp = "hydra_mcp.cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "pytest-asyncio>=0.24",
+    "ruff>=0.8",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hydra_mcp"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "ASYNC"]

@@ -1,0 +1,845 @@
+{
+  "checked_at": "2026-11-24",
+  "connectors": [
+    {
+      "id": "gmail",
+      "name": "Gmail",
+      "vendor": "Google",
+      "category": "email",
+      "url": "https://gmailmcp.googleapis.com/mcp/v1",
+      "auth": "oauth_preregistered",
+      "status": "preview",
+      "scopes": [
+        "https://www.googleapis.com/auth/gmail.readonly",
+        "https://www.googleapis.com/auth/gmail.compose",
+        "https://www.googleapis.com/auth/gmail.modify"
+      ],
+      "notes": "Developer Preview program required. Create your own Google Cloud OAuth client ('Use this client for an AI-powered agent') and enable gmail.googleapis.com + gmailmcp.googleapis.com.",
+      "docs": "https://developers.google.com/workspace/gmail/api/guides/configure-mcp-server",
+      "guide": {
+        "summary": "Google's official Gmail MCP server. Each Google account (personal Gmail or Workspace) becomes one hydra-mcp account.",
+        "before": [
+          "Your Google account must be enrolled in the Google Workspace Developer Preview Program: the Workspace MCP servers are not public yet.",
+          "A Google Cloud project (free). One project and one OAuth client serve every Google connector and every Google account.",
+          "About 10 minutes the first time, to create that OAuth client. The next Gmail or Google accounts connect in one click."
+        ],
+        "accounts": "Add as many Google accounts as you like. In Testing mode, each address must first be added as a test user on the consent screen.",
+        "gotchas": [
+          "Google rejects calls from an OAuth client unless 'Use this client for an AI-powered agent' is ticked when the client is created.",
+          "APIs to enable: gmail.googleapis.com and gmailmcp.googleapis.com.",
+          "Scopes: gmail.readonly, gmail.compose, gmail.modify. Tools: search and read threads, drafts, labels. The Gmail MCP server cannot send mail; it creates drafts.",
+          "hydra-mcp asks Google for offline access, so it gets a refresh token and you do not log in again every hour.",
+          "Testing-mode apps: Google may expire refresh tokens after 7 days. If an account turns 'not connected', click Reconnect, or publish the consent screen to 'In production' (no review needed for personal use under 100 users, but Google shows an 'unverified app' warning)."
+        ],
+        "token": null,
+        "links": [
+          {
+            "label": "Gmail MCP server setup (Google)",
+            "url": "https://developers.google.com/workspace/gmail/api/guides/configure-mcp-server"
+          },
+          {
+            "label": "Configure the Workspace MCP servers (Google)",
+            "url": "https://developers.google.com/workspace/guides/configure-mcp-servers"
+          },
+          {
+            "label": "Workspace Developer Preview Program",
+            "url": "https://developers.google.com/workspace/preview"
+          },
+          {
+            "label": "Securing Workspace MCP servers (prompt injection)",
+            "url": "https://developers.google.com/workspace/guides/configure-mcp-security"
+          }
+        ]
+      }
+    },
+    {
+      "id": "google-drive",
+      "name": "Google Drive",
+      "vendor": "Google",
+      "category": "files",
+      "url": "https://drivemcp.googleapis.com/mcp/v1",
+      "auth": "oauth_preregistered",
+      "status": "preview",
+      "scopes": [
+        "https://www.googleapis.com/auth/drive.readonly",
+        "https://www.googleapis.com/auth/drive.file"
+      ],
+      "notes": "Same Google Cloud OAuth client as Gmail; enable drive.googleapis.com + drivemcp.googleapis.com.",
+      "docs": "https://developers.google.com/workspace/guides/configure-mcp-servers",
+      "guide": {
+        "summary": "Google's official Drive MCP server. Each Google account (personal Gmail or Workspace) becomes one hydra-mcp account.",
+        "before": [
+          "Your Google account must be enrolled in the Google Workspace Developer Preview Program: the Workspace MCP servers are not public yet.",
+          "A Google Cloud project (free). One project and one OAuth client serve every Google connector and every Google account.",
+          "About 10 minutes the first time, to create that OAuth client. The next Drive or Google accounts connect in one click."
+        ],
+        "accounts": "Add as many Google accounts as you like. In Testing mode, each address must first be added as a test user on the consent screen.",
+        "gotchas": [
+          "Google rejects calls from an OAuth client unless 'Use this client for an AI-powered agent' is ticked when the client is created.",
+          "APIs to enable: drive.googleapis.com and drivemcp.googleapis.com.",
+          "Scopes: drive.readonly and drive.file (drive.file only reaches files the app created or you opened with it).",
+          "hydra-mcp asks Google for offline access, so it gets a refresh token and you do not log in again every hour.",
+          "Testing-mode apps: Google may expire refresh tokens after 7 days. If an account turns 'not connected', click Reconnect, or publish the consent screen to 'In production' (no review needed for personal use under 100 users, but Google shows an 'unverified app' warning)."
+        ],
+        "token": null,
+        "links": [
+          {
+            "label": "Configure the Workspace MCP servers (Google)",
+            "url": "https://developers.google.com/workspace/guides/configure-mcp-servers"
+          },
+          {
+            "label": "Workspace Developer Preview Program",
+            "url": "https://developers.google.com/workspace/preview"
+          },
+          {
+            "label": "Securing Workspace MCP servers (prompt injection)",
+            "url": "https://developers.google.com/workspace/guides/configure-mcp-security"
+          }
+        ]
+      }
+    },
+    {
+      "id": "google-calendar",
+      "name": "Google Calendar",
+      "vendor": "Google",
+      "category": "calendar",
+      "url": "https://calendarmcp.googleapis.com/mcp/v1",
+      "auth": "oauth_preregistered",
+      "status": "preview",
+      "scopes": [
+        "https://www.googleapis.com/auth/calendar.calendarlist.readonly",
+        "https://www.googleapis.com/auth/calendar.events.freebusy",
+        "https://www.googleapis.com/auth/calendar.events.readonly",
+        "https://www.googleapis.com/auth/calendar.events"
+      ],
+      "notes": "Enable calendar-json.googleapis.com + calendarmcp.googleapis.com.",
+      "docs": "https://developers.google.com/workspace/guides/configure-mcp-servers",
+      "guide": {
+        "summary": "Google's official Calendar MCP server. Each Google account (personal Gmail or Workspace) becomes one hydra-mcp account.",
+        "before": [
+          "Your Google account must be enrolled in the Google Workspace Developer Preview Program: the Workspace MCP servers are not public yet.",
+          "A Google Cloud project (free). One project and one OAuth client serve every Google connector and every Google account.",
+          "About 10 minutes the first time, to create that OAuth client. The next Calendar or Google accounts connect in one click."
+        ],
+        "accounts": "Add as many Google accounts as you like. In Testing mode, each address must first be added as a test user on the consent screen.",
+        "gotchas": [
+          "Google rejects calls from an OAuth client unless 'Use this client for an AI-powered agent' is ticked when the client is created.",
+          "APIs to enable: calendar-json.googleapis.com and calendarmcp.googleapis.com.",
+          "Scopes: calendarlist.readonly, events.freebusy, events.readonly, events.",
+          "hydra-mcp asks Google for offline access, so it gets a refresh token and you do not log in again every hour.",
+          "Testing-mode apps: Google may expire refresh tokens after 7 days. If an account turns 'not connected', click Reconnect, or publish the consent screen to 'In production' (no review needed for personal use under 100 users, but Google shows an 'unverified app' warning)."
+        ],
+        "token": null,
+        "links": [
+          {
+            "label": "Configure the Workspace MCP servers (Google)",
+            "url": "https://developers.google.com/workspace/guides/configure-mcp-servers"
+          },
+          {
+            "label": "Workspace Developer Preview Program",
+            "url": "https://developers.google.com/workspace/preview"
+          },
+          {
+            "label": "Securing Workspace MCP servers (prompt injection)",
+            "url": "https://developers.google.com/workspace/guides/configure-mcp-security"
+          }
+        ]
+      }
+    },
+    {
+      "id": "google-docs",
+      "name": "Google Docs",
+      "vendor": "Google",
+      "category": "files",
+      "url": "https://docsmcp.googleapis.com/mcp/v1",
+      "auth": "oauth_preregistered",
+      "status": "preview",
+      "scopes": [
+        "https://www.googleapis.com/auth/drive.readonly",
+        "https://www.googleapis.com/auth/drive.file",
+        "https://www.googleapis.com/auth/documents.readonly",
+        "https://www.googleapis.com/auth/documents"
+      ],
+      "notes": "Enable docs.googleapis.com + docsmcp.googleapis.com.",
+      "docs": "https://developers.google.com/workspace/guides/configure-mcp-servers",
+      "guide": {
+        "summary": "Google's official Docs MCP server. Each Google account (personal Gmail or Workspace) becomes one hydra-mcp account.",
+        "before": [
+          "Your Google account must be enrolled in the Google Workspace Developer Preview Program: the Workspace MCP servers are not public yet.",
+          "A Google Cloud project (free). One project and one OAuth client serve every Google connector and every Google account.",
+          "About 10 minutes the first time, to create that OAuth client. The next Docs or Google accounts connect in one click."
+        ],
+        "accounts": "Add as many Google accounts as you like. In Testing mode, each address must first be added as a test user on the consent screen.",
+        "gotchas": [
+          "Google rejects calls from an OAuth client unless 'Use this client for an AI-powered agent' is ticked when the client is created.",
+          "APIs to enable: docs.googleapis.com and docsmcp.googleapis.com.",
+          "Scopes: drive.readonly, drive.file, documents.readonly, documents.",
+          "hydra-mcp asks Google for offline access, so it gets a refresh token and you do not log in again every hour.",
+          "Testing-mode apps: Google may expire refresh tokens after 7 days. If an account turns 'not connected', click Reconnect, or publish the consent screen to 'In production' (no review needed for personal use under 100 users, but Google shows an 'unverified app' warning)."
+        ],
+        "token": null,
+        "links": [
+          {
+            "label": "Configure the Workspace MCP servers (Google)",
+            "url": "https://developers.google.com/workspace/guides/configure-mcp-servers"
+          },
+          {
+            "label": "Workspace Developer Preview Program",
+            "url": "https://developers.google.com/workspace/preview"
+          },
+          {
+            "label": "Securing Workspace MCP servers (prompt injection)",
+            "url": "https://developers.google.com/workspace/guides/configure-mcp-security"
+          }
+        ]
+      }
+    },
+    {
+      "id": "google-sheets",
+      "name": "Google Sheets",
+      "vendor": "Google",
+      "category": "files",
+      "url": "https://sheetsmcp.googleapis.com/mcp/v1",
+      "auth": "oauth_preregistered",
+      "status": "preview",
+      "scopes": [
+        "https://www.googleapis.com/auth/drive.readonly",
+        "https://www.googleapis.com/auth/drive.file",
+        "https://www.googleapis.com/auth/spreadsheets.readonly",
+        "https://www.googleapis.com/auth/spreadsheets"
+      ],
+      "notes": "Enable sheets.googleapis.com + sheetsmcp.googleapis.com.",
+      "docs": "https://developers.google.com/workspace/guides/configure-mcp-servers",
+      "guide": {
+        "summary": "Google's official Sheets MCP server. Each Google account (personal Gmail or Workspace) becomes one hydra-mcp account.",
+        "before": [
+          "Your Google account must be enrolled in the Google Workspace Developer Preview Program: the Workspace MCP servers are not public yet.",
+          "A Google Cloud project (free). One project and one OAuth client serve every Google connector and every Google account.",
+          "About 10 minutes the first time, to create that OAuth client. The next Sheets or Google accounts connect in one click."
+        ],
+        "accounts": "Add as many Google accounts as you like. In Testing mode, each address must first be added as a test user on the consent screen.",
+        "gotchas": [
+          "Google rejects calls from an OAuth client unless 'Use this client for an AI-powered agent' is ticked when the client is created.",
+          "APIs to enable: sheets.googleapis.com and sheetsmcp.googleapis.com.",
+          "Scopes: drive.readonly, drive.file, spreadsheets.readonly, spreadsheets.",
+          "hydra-mcp asks Google for offline access, so it gets a refresh token and you do not log in again every hour.",
+          "Testing-mode apps: Google may expire refresh tokens after 7 days. If an account turns 'not connected', click Reconnect, or publish the consent screen to 'In production' (no review needed for personal use under 100 users, but Google shows an 'unverified app' warning)."
+        ],
+        "token": null,
+        "links": [
+          {
+            "label": "Configure the Workspace MCP servers (Google)",
+            "url": "https://developers.google.com/workspace/guides/configure-mcp-servers"
+          },
+          {
+            "label": "Workspace Developer Preview Program",
+            "url": "https://developers.google.com/workspace/preview"
+          },
+          {
+            "label": "Securing Workspace MCP servers (prompt injection)",
+            "url": "https://developers.google.com/workspace/guides/configure-mcp-security"
+          }
+        ]
+      }
+    },
+    {
+      "id": "google-slides",
+      "name": "Google Slides",
+      "vendor": "Google",
+      "category": "files",
+      "url": "https://slidesmcp.googleapis.com/mcp/v1",
+      "auth": "oauth_preregistered",
+      "status": "preview",
+      "scopes": [
+        "https://www.googleapis.com/auth/drive.readonly",
+        "https://www.googleapis.com/auth/drive.file",
+        "https://www.googleapis.com/auth/presentations.readonly",
+        "https://www.googleapis.com/auth/presentations"
+      ],
+      "notes": "Enable slides.googleapis.com + slidesmcp.googleapis.com.",
+      "docs": "https://developers.google.com/workspace/guides/configure-mcp-servers",
+      "guide": {
+        "summary": "Google's official Slides MCP server. Each Google account (personal Gmail or Workspace) becomes one hydra-mcp account.",
+        "before": [
+          "Your Google account must be enrolled in the Google Workspace Developer Preview Program: the Workspace MCP servers are not public yet.",
+          "A Google Cloud project (free). One project and one OAuth client serve every Google connector and every Google account.",
+          "About 10 minutes the first time, to create that OAuth client. The next Slides or Google accounts connect in one click."
+        ],
+        "accounts": "Add as many Google accounts as you like. In Testing mode, each address must first be added as a test user on the consent screen.",
+        "gotchas": [
+          "Google rejects calls from an OAuth client unless 'Use this client for an AI-powered agent' is ticked when the client is created.",
+          "APIs to enable: slides.googleapis.com and slidesmcp.googleapis.com.",
+          "Scopes: drive.readonly, drive.file, presentations.readonly, presentations.",
+          "hydra-mcp asks Google for offline access, so it gets a refresh token and you do not log in again every hour.",
+          "Testing-mode apps: Google may expire refresh tokens after 7 days. If an account turns 'not connected', click Reconnect, or publish the consent screen to 'In production' (no review needed for personal use under 100 users, but Google shows an 'unverified app' warning)."
+        ],
+        "token": null,
+        "links": [
+          {
+            "label": "Configure the Workspace MCP servers (Google)",
+            "url": "https://developers.google.com/workspace/guides/configure-mcp-servers"
+          },
+          {
+            "label": "Workspace Developer Preview Program",
+            "url": "https://developers.google.com/workspace/preview"
+          },
+          {
+            "label": "Securing Workspace MCP servers (prompt injection)",
+            "url": "https://developers.google.com/workspace/guides/configure-mcp-security"
+          }
+        ]
+      }
+    },
+    {
+      "id": "google-chat",
+      "name": "Google Chat",
+      "vendor": "Google",
+      "category": "chat",
+      "url": "https://chatmcp.googleapis.com/mcp/v1",
+      "auth": "oauth_preregistered",
+      "status": "preview",
+      "scopes": [
+        "https://www.googleapis.com/auth/chat.spaces.readonly",
+        "https://www.googleapis.com/auth/chat.memberships.readonly",
+        "https://www.googleapis.com/auth/chat.messages.readonly",
+        "https://www.googleapis.com/auth/chat.messages.create",
+        "https://www.googleapis.com/auth/chat.users.readstate",
+        "https://www.googleapis.com/auth/chat.users.spacesettings"
+      ],
+      "notes": "Writes require a configured Chat app.",
+      "docs": "https://developers.google.com/workspace/guides/configure-mcp-servers",
+      "guide": {
+        "summary": "Google's official Chat MCP server. Each Google account (personal Gmail or Workspace) becomes one hydra-mcp account.",
+        "before": [
+          "Your Google account must be enrolled in the Google Workspace Developer Preview Program: the Workspace MCP servers are not public yet.",
+          "A Google Cloud project (free). One project and one OAuth client serve every Google connector and every Google account.",
+          "About 10 minutes the first time, to create that OAuth client. The next Chat or Google accounts connect in one click."
+        ],
+        "accounts": "Add as many Google accounts as you like. In Testing mode, each address must first be added as a test user on the consent screen.",
+        "gotchas": [
+          "Google rejects calls from an OAuth client unless 'Use this client for an AI-powered agent' is ticked when the client is created.",
+          "APIs to enable: chat.googleapis.com and chatmcp.googleapis.com.",
+          "Scopes: chat.spaces.readonly, chat.memberships.readonly, chat.messages.readonly, chat.messages.create, and two chat.users scopes.",
+          "hydra-mcp asks Google for offline access, so it gets a refresh token and you do not log in again every hour.",
+          "Testing-mode apps: Google may expire refresh tokens after 7 days. If an account turns 'not connected', click Reconnect, or publish the consent screen to 'In production' (no review needed for personal use under 100 users, but Google shows an 'unverified app' warning).",
+          "Reading works out of the box. Sending messages also needs a Chat app configured on the Google Chat API Configuration page of your project."
+        ],
+        "token": null,
+        "links": [
+          {
+            "label": "Configure the Workspace MCP servers (Google)",
+            "url": "https://developers.google.com/workspace/guides/configure-mcp-servers"
+          },
+          {
+            "label": "Workspace Developer Preview Program",
+            "url": "https://developers.google.com/workspace/preview"
+          },
+          {
+            "label": "Securing Workspace MCP servers (prompt injection)",
+            "url": "https://developers.google.com/workspace/guides/configure-mcp-security"
+          }
+        ]
+      }
+    },
+    {
+      "id": "google-workspace-search",
+      "name": "Google Workspace search",
+      "vendor": "Google",
+      "category": "search",
+      "url": "https://workspacemcp.googleapis.com/mcp/v1",
+      "auth": "oauth_preregistered",
+      "status": "preview",
+      "scopes": [
+        "https://www.googleapis.com/auth/gmail.readonly",
+        "https://www.googleapis.com/auth/drive.readonly",
+        "https://www.googleapis.com/auth/calendar.readonly",
+        "https://www.googleapis.com/auth/chat.messages.readonly",
+        "https://www.googleapis.com/auth/chat.spaces.readonly",
+        "https://www.googleapis.com/auth/chat.memberships.readonly"
+      ],
+      "notes": "Read-only search across Gmail, Drive, Calendar and Chat.",
+      "docs": "https://developers.google.com/workspace/guides/universal-search-mcp",
+      "guide": {
+        "summary": "Google's official Workspace search MCP server. Each Google account (personal Gmail or Workspace) becomes one hydra-mcp account.",
+        "before": [
+          "Your Google account must be enrolled in the Google Workspace Developer Preview Program: the Workspace MCP servers are not public yet.",
+          "A Google Cloud project (free). One project and one OAuth client serve every Google connector and every Google account.",
+          "About 10 minutes the first time, to create that OAuth client. The next Workspace search or Google accounts connect in one click."
+        ],
+        "accounts": "Add as many Google accounts as you like. In Testing mode, each address must first be added as a test user on the consent screen.",
+        "gotchas": [
+          "Google rejects calls from an OAuth client unless 'Use this client for an AI-powered agent' is ticked when the client is created.",
+          "APIs to enable: workspacemcp.googleapis.com.",
+          "Read-only: one search tool across Gmail, Drive, Calendar and Chat. Scopes: gmail.readonly, drive.readonly, calendar.readonly and three Chat read scopes.",
+          "hydra-mcp asks Google for offline access, so it gets a refresh token and you do not log in again every hour.",
+          "Testing-mode apps: Google may expire refresh tokens after 7 days. If an account turns 'not connected', click Reconnect, or publish the consent screen to 'In production' (no review needed for personal use under 100 users, but Google shows an 'unverified app' warning)."
+        ],
+        "token": null,
+        "links": [
+          {
+            "label": "Workspace search MCP server setup (Google)",
+            "url": "https://developers.google.com/workspace/guides/universal-search-mcp"
+          },
+          {
+            "label": "Configure the Workspace MCP servers (Google)",
+            "url": "https://developers.google.com/workspace/guides/configure-mcp-servers"
+          },
+          {
+            "label": "Workspace Developer Preview Program",
+            "url": "https://developers.google.com/workspace/preview"
+          },
+          {
+            "label": "Securing Workspace MCP servers (prompt injection)",
+            "url": "https://developers.google.com/workspace/guides/configure-mcp-security"
+          }
+        ]
+      }
+    },
+    {
+      "id": "atlassian",
+      "name": "Atlassian (Jira, Confluence)",
+      "vendor": "Atlassian",
+      "category": "project-management",
+      "url": "https://mcp.atlassian.com/v2/mcp",
+      "auth": "oauth_dcr",
+      "status": "ga",
+      "scopes": [],
+      "notes": "Tokens are bound to one site (cloudId): one account per Atlassian site.",
+      "docs": "https://support.atlassian.com/atlassian-ai-gateway/docs/get-started-with-the-atlassian-remote-mcp-server/",
+      "guide": {
+        "summary": "Atlassian's official Rovo MCP server: Jira, Confluence, Compass, plus Teamwork Graph search. One click: hydra-mcp registers itself, you log in at Atlassian.",
+        "before": [
+          "An Atlassian Cloud site (xxx.atlassian.net). Server and Data Center are not supported.",
+          "Your site admin may restrict which apps can connect. If the consent page says access is denied, ask them to allow the Atlassian Rovo MCP server for your site."
+        ],
+        "accounts": "One hydra-mcp account per Atlassian site: the login is granted on the site you pick on the consent page. To add another site, click '+ Add another account' and choose the other site there. hydra-mcp reads the site name to label the account.",
+        "gotchas": [
+          "On the consent page, check which site is selected in the dropdown before you click Accept: it decides which site this account reaches.",
+          "Some tools (enriched Teamwork Graph calls) consume Rovo credits of your site.",
+          "Atlassian moves remaining v1 clients to the v2 tools on 1 March 2027. hydra-mcp already uses v2.",
+          "API tokens (email + token, Basic auth) also exist, but only if your org admin enables them. OAuth is Atlassian's recommended way and is what hydra-mcp uses."
+        ],
+        "token": null,
+        "links": [
+          {
+            "label": "Get started with the Atlassian Rovo MCP server",
+            "url": "https://support.atlassian.com/atlassian-ai-gateway/docs/get-started-with-the-atlassian-remote-mcp-server/"
+          },
+          {
+            "label": "Authentication and authorization",
+            "url": "https://support.atlassian.com/atlassian-ai-gateway/docs/authentication-and-authorization/"
+          },
+          {
+            "label": "Supported tools",
+            "url": "https://support.atlassian.com/atlassian-ai-gateway/docs/supported-tools/"
+          },
+          {
+            "label": "Troubleshoot your setup",
+            "url": "https://support.atlassian.com/atlassian-ai-gateway/docs/troubleshoot-and-verify-your-setup/"
+          },
+          {
+            "label": "Admin: control the MCP server settings",
+            "url": "https://support.atlassian.com/security-and-access-policies/docs/control-atlassian-rovo-mcp-server-settings/"
+          }
+        ]
+      }
+    },
+    {
+      "id": "linear",
+      "name": "Linear",
+      "vendor": "Linear",
+      "category": "project-management",
+      "url": "https://mcp.linear.app/mcp",
+      "auth": "oauth_dcr",
+      "status": "ga",
+      "scopes": [],
+      "notes": "One account per workspace. Read-only variant: https://mcp.linear.app/mcp/readonly. Also accepts a Linear API key as bearer.",
+      "docs": "https://linear.app/docs/mcp",
+      "guide": {
+        "summary": "Linear's official MCP server: issues, projects, cycles, comments. One click: hydra-mcp registers itself, you log in at Linear.",
+        "before": [
+          "A Linear account. No plan or admin approval is needed for the standard login."
+        ],
+        "accounts": "One hydra-mcp account per Linear workspace. To add another workspace, click '+ Add another account' and pick the other workspace on Linear's consent page.",
+        "gotchas": [
+          "Linear's OAuth sessions start with a 25-day refresh window. If an account turns 'not connected', click Reconnect.",
+          "Read-only alternative: a Linear API key with only the Read permission (use 'Use a token instead')."
+        ],
+        "token": {
+          "name": "Linear API key",
+          "create_url": "https://linear.app/settings/account/security",
+          "how": "Linear, Settings, Security & access, Personal API keys, New key. Pick the workspace and the permissions (Read only is enough to search). Copy the key (lin_api_...)."
+        },
+        "links": [
+          {
+            "label": "Linear MCP server",
+            "url": "https://linear.app/docs/mcp"
+          },
+          {
+            "label": "FAQ and troubleshooting",
+            "url": "https://linear.app/docs/mcp#faq"
+          }
+        ]
+      }
+    },
+    {
+      "id": "notion",
+      "name": "Notion",
+      "vendor": "Notion",
+      "category": "docs",
+      "url": "https://mcp.notion.com/mcp",
+      "auth": "oauth_dcr",
+      "status": "ga",
+      "scopes": [],
+      "notes": "Supports DCR and Client ID Metadata Documents.",
+      "docs": "https://developers.notion.com/guides/mcp/get-started-with-mcp",
+      "guide": {
+        "summary": "Notion's official hosted MCP server: search, read and edit pages and databases. One click: hydra-mcp registers itself, you log in at Notion.",
+        "before": [
+          "You must be a member of the workspace. Guests cannot connect.",
+          "The AI sees exactly what your Notion user can see in the workspace you pick."
+        ],
+        "accounts": "One hydra-mcp account per Notion workspace: pick the workspace on Notion's consent page.",
+        "gotchas": [
+          "Search across connected sources (Slack, Google Drive...) and some search filters need a Business or Enterprise plan with Notion AI.",
+          "Business and Enterprise plans get higher rate limits.",
+          "MCP tokens (no browser login) exist on Business and Enterprise only, and only workspace owners can create them.",
+          "The older open-source notion-mcp-server (integration token) is no longer maintained: use this hosted one."
+        ],
+        "token": {
+          "name": "Notion MCP token (Business and Enterprise)",
+          "create_url": "https://developers.notion.com/guides/mcp/get-started-with-mcp",
+          "how": "A workspace owner creates it in Notion's Developer portal with 'New MCP token'. Paste it here; no browser login is needed."
+        },
+        "links": [
+          {
+            "label": "Get started with Notion MCP",
+            "url": "https://developers.notion.com/guides/mcp/get-started-with-mcp"
+          },
+          {
+            "label": "Supported tools and rate limits",
+            "url": "https://developers.notion.com/guides/mcp/mcp-supported-tools"
+          }
+        ]
+      }
+    },
+    {
+      "id": "github",
+      "name": "GitHub",
+      "vendor": "GitHub",
+      "category": "code",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "auth": "oauth_preregistered",
+      "status": "ga",
+      "scopes": [],
+      "notes": "No dynamic registration: create a GitHub OAuth App once, or connect with a personal access token. Keep the trailing slash.",
+      "docs": "https://github.com/github/github-mcp-server",
+      "guide": {
+        "summary": "GitHub's official remote MCP server: repositories, issues, pull requests, Actions, code search. GitHub does not let apps register themselves, so choose one of two ways.",
+        "before": [
+          "Fastest: a personal access token (2 minutes, nothing to register). Click 'Use a token instead'.",
+          "Or a GitHub OAuth App (5 minutes, once): then every GitHub account signs in with one click, like in Claude.",
+          "Organization repositories: the org may require owner approval for OAuth Apps, or for fine-grained tokens. Check Organization settings, Third-party access."
+        ],
+        "accounts": "One hydra-mcp account per GitHub user (or per token). hydra-mcp labels it with the GitHub login.",
+        "gotchas": [
+          "The OAuth consent screen lists broad classic scopes (repo, read:org, gist, notifications...). For narrow access, use a fine-grained token restricted to some repositories.",
+          "Fine-grained tokens expire (you choose the date, up to a year). When one expires, the account shows 'not connected': create a new token and click 'New token' on that account.",
+          "GitHub Enterprise Server is not supported by the remote server. GitHub Enterprise Cloud with data residency uses another host (copilot-api.<your-subdomain>.ghe.com/mcp): add it by URL.",
+          "Read-only variant: add https://api.githubcopilot.com/mcp/readonly by URL."
+        ],
+        "token": {
+          "name": "GitHub personal access token",
+          "create_url": "https://github.com/settings/personal-access-tokens/new",
+          "how": "Fine-grained token: name it hydra-mcp, pick an expiration, choose the resource owner and the repositories, then under Repository permissions give Contents, Issues and Pull requests: Read (or Read and write). Metadata: Read is added automatically. Generate, then copy the token (github_pat_...). A classic token (ghp_..., scope repo) also works."
+        },
+        "client": {
+          "provider": "GitHub",
+          "client_type": "OAuth App",
+          "steps": [
+            {
+              "title": "Open 'Register a new OAuth app' on GitHub",
+              "text": "For an app owned by an organization instead of you: Organization settings, Developer settings, OAuth Apps, New OAuth App.",
+              "link": "https://github.com/settings/applications/new"
+            },
+            {
+              "title": "Fill in the form",
+              "text": "Redirect URI is the callback below, not the homepage. Leave 'Allow wildcard matching' and 'Enable Device Flow' unticked. Tick 'Expire user access tokens': GitHub then issues 8-hour tokens with a refresh token, which hydra-mcp renews on its own (unticked works too: tokens never expire). Then click Register application.",
+              "fields": [
+                {
+                  "label": "Application name",
+                  "value": "hydra-mcp"
+                },
+                {
+                  "label": "Homepage URL",
+                  "value": "{base_url}"
+                },
+                {
+                  "label": "Redirect URI",
+                  "value": "{redirect_uri}"
+                }
+              ]
+            },
+            {
+              "title": "Generate a client secret",
+              "text": "On the app's page, copy the Client ID, then click 'Generate a new client secret' and copy it now: GitHub shows it only once."
+            },
+            {
+              "title": "Paste the client ID and secret below",
+              "text": "The secret is stored encrypted on this machine. Then GitHub asks you to authorize hydra-mcp. For organization repositories, use 'Request' or 'Grant' next to the org on that page."
+            }
+          ]
+        },
+        "links": [
+          {
+            "label": "GitHub MCP server (README)",
+            "url": "https://github.com/github/github-mcp-server"
+          },
+          {
+            "label": "Remote server: URLs, toolsets, read-only",
+            "url": "https://github.com/github/github-mcp-server/blob/main/docs/remote-server.md"
+          },
+          {
+            "label": "Creating an OAuth App",
+            "url": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app"
+          },
+          {
+            "label": "Managing personal access tokens",
+            "url": "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens"
+          },
+          {
+            "label": "Policies and governance",
+            "url": "https://github.com/github/github-mcp-server/blob/main/docs/policies-and-governance.md"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sentry",
+      "name": "Sentry",
+      "vendor": "Sentry",
+      "category": "observability",
+      "url": "https://mcp.sentry.dev/mcp",
+      "auth": "oauth_dcr",
+      "status": "ga",
+      "scopes": [],
+      "notes": "Can be scoped to /mcp/{org}/{project}.",
+      "docs": "https://mcp.sentry.dev/",
+      "guide": {
+        "summary": "Sentry's official MCP server: issues, events, traces, releases, and Seer analysis. One click: hydra-mcp registers itself, you log in at Sentry.",
+        "before": [
+          "A sentry.io account. Self-hosted Sentry is not served by this remote server (Sentry's CLI offers a local one)."
+        ],
+        "accounts": "One hydra-mcp account per Sentry login. To keep two organizations apart, add each by URL scoped to it: https://mcp.sentry.dev/mcp/<org-slug> (or /<org-slug>/<project-slug>, which Sentry recommends).",
+        "gotchas": [
+          "Sentry offers no token login for the remote server: OAuth only.",
+          "Add ?experimental=1 to the URL to get Sentry's experimental tools."
+        ],
+        "token": null,
+        "links": [
+          {
+            "label": "Sentry MCP server",
+            "url": "https://mcp.sentry.dev/"
+          },
+          {
+            "label": "Sentry CLI (local MCP, self-hosted)",
+            "url": "https://cli.sentry.dev/getting-started/"
+          }
+        ]
+      }
+    },
+    {
+      "id": "stripe",
+      "name": "Stripe",
+      "vendor": "Stripe",
+      "category": "payments",
+      "url": "https://mcp.stripe.com",
+      "auth": "oauth_dcr",
+      "status": "ga",
+      "scopes": [],
+      "notes": "OAuth refresh tokens expire after 14 days. Restricted agent API key also accepted as bearer.",
+      "docs": "https://docs.stripe.com/mcp",
+      "guide": {
+        "summary": "Stripe's official MCP server: customers, payments, invoices, subscriptions, docs search. One click: hydra-mcp registers itself, you approve access in Stripe.",
+        "before": [
+          "A Stripe account. Team admins can switch MCP access off, separately for live mode and sandboxes: Dashboard, Settings, MCP and CLI access.",
+          "Start with a sandbox: on the consent page you choose live or sandbox and the permissions per environment."
+        ],
+        "accounts": "One hydra-mcp account per Stripe account and environment you approve.",
+        "gotchas": [
+          "Stripe's OAuth sessions last 14 days at most, refresh included: after that the account shows 'not connected' and you click Reconnect. An agent API key avoids this.",
+          "Sensitive actions such as refunds ask for a confirmation in the Stripe Dashboard, through a link the AI gives you. It expires after 24 hours.",
+          "From 11 January 2027, Stripe MCP only accepts OAuth or agent API keys: full secret keys (sk_...) and plain restricted keys stop working.",
+          "Connect platforms: OAuth cannot act on connected accounts; use an agent API key."
+        ],
+        "token": {
+          "name": "Stripe agent API key",
+          "create_url": "https://docs.stripe.com/keys#agent-keys",
+          "how": "In the Stripe Dashboard, create an agent API key with only the permissions you want the AI to have (it shows an 'Agent' badge). Paste it here."
+        },
+        "links": [
+          {
+            "label": "Stripe MCP",
+            "url": "https://docs.stripe.com/mcp"
+          },
+          {
+            "label": "Agent API keys",
+            "url": "https://docs.stripe.com/keys#agent-keys"
+          },
+          {
+            "label": "Dashboard: MCP and CLI access",
+            "url": "https://dashboard.stripe.com/settings/mcp-and-cli-access"
+          }
+        ]
+      }
+    },
+    {
+      "id": "asana",
+      "name": "Asana",
+      "vendor": "Asana",
+      "category": "project-management",
+      "url": "https://mcp.asana.com/v2/mcp",
+      "auth": "oauth_preregistered",
+      "status": "ga",
+      "scopes": [],
+      "notes": "No dynamic client registration on v2: create an MCP app in the Asana developer console.",
+      "docs": "https://developers.asana.com/docs/using-asanas-mcp-server",
+      "guide": {
+        "summary": "Asana's official MCP server (v2): tasks, projects, goals, portfolios. Asana does not let apps register themselves: you create an Asana app once.",
+        "before": [
+          "About 5 minutes once, in Asana's developer console, to create the app hydra-mcp signs in with.",
+          "Your workspace admin may block MCP clients in App management (Enterprise). If the login says the app is blocked, ask them to allow it."
+        ],
+        "accounts": "One hydra-mcp account per Asana login; it reaches the workspaces that user belongs to.",
+        "gotchas": [
+          "'Client not found' at login: the client ID is wrong or the app was deleted. Use 'Reset' on the server (Advanced) and paste a new one.",
+          "The old v1 endpoint (mcp.asana.com/sse) is shut down; hydra-mcp uses v2.",
+          "Asana has no token login for the v2 MCP server."
+        ],
+        "token": null,
+        "client": {
+          "provider": "Asana",
+          "client_type": "Asana app (OAuth)",
+          "steps": [
+            {
+              "title": "Read Asana's MCP integration guide",
+              "text": "It shows which app type to pick for an MCP client. Keep it open next to the console.",
+              "link": "https://developers.asana.com/docs/integrating-with-asanas-mcp-server"
+            },
+            {
+              "title": "Create the app in the developer console",
+              "text": "My apps, Create new app, name it hydra-mcp. In its OAuth settings, add this redirect URL.",
+              "link": "https://app.asana.com/0/my-apps",
+              "fields": [
+                {
+                  "label": "Redirect URL",
+                  "value": "{redirect_uri}"
+                }
+              ]
+            },
+            {
+              "title": "Paste the client ID and secret below",
+              "text": "Both are on the app's OAuth page. The secret is stored encrypted on this machine."
+            }
+          ]
+        },
+        "links": [
+          {
+            "label": "Using Asana's MCP server",
+            "url": "https://developers.asana.com/docs/using-asanas-mcp-server"
+          },
+          {
+            "label": "Integrating with Asana's MCP server",
+            "url": "https://developers.asana.com/docs/integrating-with-asanas-mcp-server"
+          },
+          {
+            "label": "MCP tools reference",
+            "url": "https://developers.asana.com/docs/mcp-tools-reference"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cloudflare",
+      "name": "Cloudflare API",
+      "vendor": "Cloudflare",
+      "category": "infrastructure",
+      "url": "https://mcp.cloudflare.com/mcp",
+      "auth": "oauth_dcr",
+      "status": "ga",
+      "scopes": [],
+      "notes": "Also accepts a Cloudflare API token as bearer. Product-specific servers exist (docs, browser, containers...).",
+      "docs": "https://developers.cloudflare.com/agents/model-context-protocol/cloudflare/servers-for-cloudflare/",
+      "guide": {
+        "summary": "Cloudflare's API MCP server: the whole Cloudflare API (2,500+ endpoints) through search and execute tools. One click: hydra-mcp registers itself, you pick the permissions at Cloudflare.",
+        "before": [
+          "A Cloudflare account. On the consent page you choose which permissions the AI gets: grant the least you need."
+        ],
+        "accounts": "One hydra-mcp account per Cloudflare login, or per API token.",
+        "gotchas": [
+          "The execute tool runs JavaScript the AI writes against the Cloudflare API, in an isolated sandbox. With write permissions it can change DNS, Workers, etc. Give a read-only grant to clients that only need to look.",
+          "Product servers (docs, browser, containers...) have their own URLs, e.g. https://docs.mcp.cloudflare.com/mcp: add them by URL."
+        ],
+        "token": {
+          "name": "Cloudflare API token",
+          "create_url": "https://dash.cloudflare.com/profile/api-tokens",
+          "how": "My Profile, API Tokens, Create Token. Start from a template or pick permissions and accounts. User tokens and account tokens both work."
+        },
+        "links": [
+          {
+            "label": "MCP servers for Cloudflare",
+            "url": "https://developers.cloudflare.com/agents/model-context-protocol/cloudflare/servers-for-cloudflare/"
+          },
+          {
+            "label": "Cloudflare API",
+            "url": "https://developers.cloudflare.com/api/"
+          }
+        ]
+      }
+    },
+    {
+      "id": "supabase",
+      "name": "Supabase",
+      "vendor": "Supabase",
+      "category": "database",
+      "url": "https://mcp.supabase.com/mcp",
+      "auth": "oauth_dcr",
+      "status": "ga",
+      "scopes": [],
+      "notes": "Optional query params: project_ref, read_only=true, features.",
+      "docs": "https://supabase.com/docs/guides/ai-tools/mcp",
+      "guide": {
+        "summary": "Supabase's official MCP server: projects, SQL, migrations, Edge Functions, logs, docs. One click: hydra-mcp registers itself, you pick the organization at Supabase.",
+        "before": [
+          "A Supabase account. On the consent page, choose the organization that holds your project.",
+          "Supabase strongly advises against connecting production data. Use a dev project, or scope and lock it down (see below)."
+        ],
+        "accounts": "One hydra-mcp account per Supabase organization you approve, or per access token.",
+        "gotchas": [
+          "Safer URL: add it by URL with ?project_ref=<id>&read_only=true to reach one project, read-only. features=<groups> limits the tool groups.",
+          "Branching tools need a paid plan. Storage tools are off by default.",
+          "Confirmation forms before risky tools are a guardrail, not a guarantee."
+        ],
+        "token": {
+          "name": "Supabase personal access token",
+          "create_url": "https://supabase.com/dashboard/account/tokens",
+          "how": "Account, Access Tokens, Generate new token. Supabase recommends also scoping the server URL with ?project_ref=<id>."
+        },
+        "links": [
+          {
+            "label": "Supabase MCP server",
+            "url": "https://supabase.com/docs/guides/ai-tools/mcp"
+          },
+          {
+            "label": "Personal access tokens",
+            "url": "https://supabase.com/docs/guides/platform/personal-access-tokens"
+          },
+          {
+            "label": "Source and security notes",
+            "url": "https://github.com/supabase/mcp"
+          }
+        ]
+      }
+    }
+  ]
+}
