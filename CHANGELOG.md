@@ -18,6 +18,15 @@ All notable changes to hydra-mcp are listed here. The format follows
 - Provider quirks as connector data: `redirect_host`, `scope_separator`,
   `one_client_per_workspace`. Token responses in Slack's shape (`ok`, `authed_user`) are
   normalized.
+- claude.ai and Claude Desktop custom connectors: hydra-mcp is now also an OAuth server for apps
+  (protected resource and server metadata, dynamic registration, consent page bound to a
+  hydra-mcp client, PKCE, rotating refresh tokens with reuse detection, revocation). Apps
+  signed in this way show on their client card and can be signed out.
+- `HYDRA_MCP_EXTERNAL_URL` for a tunnel: only `/mcp` and the app login are served under it; the
+  admin page and API stay local-only.
+- `hydra-mcp bridge`: a stdio relay for Claude Desktop's config file, no tunnel needed. The
+  admin page's setup now has *Claude Desktop* and *claude.ai* tabs.
+- Guides: `docs/clients/claude-desktop.md`, `docs/clients/claude-ai.md`.
 
 ### Changed
 
