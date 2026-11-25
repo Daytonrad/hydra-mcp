@@ -5,7 +5,7 @@ from __future__ import annotations
 import contextlib
 import html
 import logging
-from collections.abc import AsyncIterator
+from collections.abc import AsyncIterator, Awaitable, Callable
 from dataclasses import dataclass
 from urllib.parse import urlencode, urlsplit
 
@@ -25,6 +25,7 @@ from hydra_mcp.broker.oauth import OAuthBroker, OAuthError
 from hydra_mcp.broker.stdio import StdioPool
 from hydra_mcp.broker.upstream import UpstreamClient
 from hydra_mcp.clientauth import ClientAuth, Origins
+from hydra_mcp.demo import DemoProvider, LoopbackTransport
 from hydra_mcp.router import Router
 from hydra_mcp.settings import Settings
 from hydra_mcp.store import Store
@@ -49,13 +50,21 @@ def create_app(
     store: Store | None = None,
     http: httpx.AsyncClient | None = None,
     vault: Vault | None = None,
+    demo: DemoProvider | None = None,
+    on_startup: Callable[[Services], Awaitable[None]] | None = None,
 ) -> Starlette:
+    """Build the proxy app.
+
+    `demo` mounts the fake provider of demo mode (see hydra_mcp.demo) and routes the proxy's own
+    calls to it in process. `on_startup` runs once the store is open (demo mode seeds with it).
+    """
     settings = settings or Settings()
     store = store or Store(settings.db_path)
     http = http or httpx.AsyncClient(
         timeout=httpx.Timeout(settings.upstream_timeout_s, connect=10.0),
         follow_redirects=False,
         headers={"User-Agent": f"hydra-mcp/{__version__}"},
+        transport=LoopbackTransport(demo) if demo else None,
     )
     vault = vault or Vault.from_dir(settings.data_dir)
     router = Router(store, http, settings.base_url)
@@ -88,8 +97,10 @@ def create_app(
     @contextlib.asynccontextmanager
     async def lifespan(app: Starlette) -> AsyncIterator[None]:
         await store.open()
-        log.info("hydra-mcp %s listening for %s", __version__, settings.base_url)
         try:
+            if on_startup is not None:
+                await on_startup(services)
+            log.info("hydra-mcp %s listening for %s", __version__, settings.base_url)
             yield
         finally:
             if stdio is not None:
@@ -136,6 +147,7 @@ def create_app(
         ),
         *client_auth.routes(),
         *build_admin_routes(services, admin_token),
+        *(demo.routes() if demo else []),
     ]
     if settings.admin_dist and settings.admin_dist.is_dir():
         routes.append(Route("/", lambda r: RedirectResponse("/admin/"), methods=["GET"]))

@@ -27,6 +27,15 @@ All notable changes to hydra-mcp are listed here. The format follows
 - `hydra-mcp bridge`: a stdio relay for Claude Desktop's config file, no tunnel needed. The
   admin page's setup now has *Claude Desktop* and *claude.ai* tabs.
 - Guides: `docs/clients/claude-desktop.md`, `docs/clients/claude-ai.md`.
+- One-line install: `uvx hydra-mcp` or `pipx install hydra-mcp`. The wheel ships the admin page,
+  so Node is no longer needed to run hydra-mcp.
+- `hydra-mcp demo`: a fake provider (Demo Tracker) served by the proxy, with two accounts already
+  connected through the real OAuth flow and a ready client, in a throwaway data directory.
+- Docker image `ghcr.io/lambi702/hydra-mcp` (amd64 and arm64, non-root, healthcheck) and a
+  `compose.yaml`.
+- Release workflow publishing to PyPI (trusted publishing) and ghcr.io; CI now builds and
+  smoke-tests the wheel and the image on every PR.
+- `hydra-mcp serve --open` opens the admin page; `hydra-mcp` alone means `hydra-mcp serve`.
 
 ### Changed
 
@@ -34,6 +43,8 @@ All notable changes to hydra-mcp are listed here. The format follows
   client type and tools, GitHub toolset URLs, Notion SSE retirement and limits, Linear
   read-only URL.
 - After a provider login, the browser returns to the absolute public URL of the admin page.
+- The public URL follows `--port`/`HYDRA_MCP_PORT` unless `HYDRA_MCP_PUBLIC_URL` is set, so
+  changing the port no longer breaks OAuth callbacks.
 
 ## [0.1.0] - 2026-11-24
 
